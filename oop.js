@@ -34,10 +34,7 @@ class Order {
   addProduct(product) {
     let orderDetail = this.addProductById(product.id);
     if (!orderDetail) {
-      const ids = this.orderDetails.map((x) => x.id);
-      const maxId = Math.max(...(ids.length > 0 ? ids : [0]));
       orderDetail = new OrderDetail(product);
-      orderDetail.id = maxId + 1;
       this.orderDetails.push(orderDetail);
     }
   }
@@ -64,9 +61,9 @@ class Order {
   }
 
   renderTotal() {
-    document.getElementById("total").innerHTML = this.total;
-    document.getElementById("sub-total").innerHTML = this.subTotal;
-    document.getElementById("shipping").innerHTML = this.shipping;
+    document.getElementById("total").innerHTML = `$${this.total}`
+    document.getElementById("sub-total").innerHTML = `$${this.subTotal}`
+    document.getElementById("shipping").innerHTML = `$${this.shipping}`
   }
 
   renderTable() {
@@ -99,7 +96,7 @@ class OrderDetail {
 
   constructor(product) {
     this.product = product;
-    this.quantity = 1;
+    this.quantity = product.num;
     this.price = product.price;
   }
 
@@ -162,10 +159,12 @@ class Product {
   id;
   name;
   price;
+  num;
   constructor(product) {
     this.id = product.id;
     this.name = product.productName;
     this.price = product.productPrice;
+    this.num=product.productNumber;
   }
 }
 
